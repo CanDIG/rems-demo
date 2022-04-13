@@ -118,6 +118,12 @@ In case of error, here's an example you can examine instead. Copy the long strin
 }
 ```
 
-## Technical debt
+## For developers / deployment
 
-Currently there is a `frontendUrl` hardcoded in `rp-keycloak.realm-export.json`. This was a necessary workaround in the past, to get routing from REMS to the keycloak and back to work properly, but can probably be removed now.
+If you modify the networking of the docker containers, consider the following:
+
+There is a `frontendUrl` hardcoded in `rp-keycloak.realm-export.json`. This should correspond to the value of `OIDC_METADATA_URL` in the environment of the REMS container. Having this value be hardcoded is not ideal, but it is a workaround for some issues introduced by the combination of the following:
+    - The way that REMS handles networking with the IdP
+    - The docker-compose bridge network's use of internal ports.
+
+The value of `frontendUrl` can be modified in the realm-export.json file, or through the keycloak administrative console in the browser.
