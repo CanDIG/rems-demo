@@ -1,5 +1,7 @@
 # rems-demo
-[CSCFI REMS](https://github.com/cscfi/rems) DAC Portal demo configuration and deployment.
+[CSCFI REMS](https://github.com/cscfi/rems) DAC Portal demo integration with Katsu and Keycloak.
+
+In this demo, REMS authenticates users with Keycloak, but authentication in Katsu is not presently addressed.
 
 Forked from [dycons/compose], significantly divergent due to having all components unrelated to the REMS demo stripped out.
 
