@@ -5,28 +5,14 @@ Forked from [dycons/compose], significantly divergent due to having all componen
 
 <!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
 
-<!-- code_chunk_output -->
 
-- [rems-demo](#rems-demo)
-  - [For Shaikh](#for-shaikh)
-    - [Dependencies](#dependencies)
-    - [Setting up the demo environment](#setting-up-the-demo-environment)
-  - [For Karen](#for-karen)
-    - [Preparing Postman for the demo](#preparing-postman-for-the-demo)
-  - [Running the demo](#running-the-demo)
+## Dependencies
 
-<!-- /code_chunk_output -->
-
-
-## For Shaikh
-
-### Dependencies
-
-In addition to this repository, the following should be available in the demo VM:
+In addition to this repository, the following should be installed to your machine:
 
 - Postman for running the demo (a collection of API requests.)
 
-### Setting up the demo environment
+## Setting up the demo environment
 
 For ClinDIG 4.2 DAC Portal demo, ignore all (Optional) steps below.
 
@@ -78,14 +64,16 @@ For ClinDIG 4.2 DAC Portal demo, ignore all (Optional) steps below.
 
 Future users can be created in REMS by logging in through the browser **or** IFF you have act as a user with the `owner` role, by sending a request to the `/api/users/create` endpoint. The `userid` must match the user's id in Keycloak.
 
-10. **Prepare Postman authorization headers**: Add headers to your requests containing the following key-value pairs:
+10. **Prepare Postman authorization headers**: REMS requires request headers to contain the following key-value pairs:
 - `x-rems-api-key`: The API key to use for authorizing your call. Must be known to REMS. Set by `./init/authorize.sh`
 - `x-rems-user-id`: The ID of your user in REMS, as set by Keycloak (ex. `$OWNER_ID`)
-Postman lets you easily reuse information like authorization variables with environment variables. Edit the `tests/rems-and-katsu-test.postman_environment.json` to populate environment variables for the demo, especially `rems-owner-user-id` and `rems-applicant-user-id`. Double-check `rems-api-key` as well. **Make sure to remove all `""` quotation marks from the environment variable values!!**
+Postman lets you easily reuse information like authorization keys with environment variables. Edit the environment defined by `tests/rems-and-katsu-test.postman_environment.json` to populate `current values` for the variables:
+    1. `rems_owner_user_id` to match the `$OWNER_ID` set by `init/rp-keycloak.sh`
+    2. `rems_applicant_user_id` to match the `$APPLICANT_ID` set by `init/rp-keycloak.sh`
+    3. Double-check the `rems_api_key`, `rems_url`, and `katsu_url`.
+    4. **Make sure to remove all `""` quotation marks from the environment variable values!!**
 
-## For Karen
-
-### Preparing Postman for the demo
+## Preparing Postman for the demo
 
 It is recommended that you run a Postman collection in the Postman UI for this demo.
 
@@ -102,7 +90,8 @@ In the instructions below, bulleted items are optional. This demo can be run by 
     - `Test Results` shows a `passed tests` counter. If it's green, all tests passed. If it's red, something's broken.
     - Notice that `Headers` is empty (or rather has nothing special in it). That is because Katsu doesn't care about authentication in this demo. But REMS will. So requests that we send to `rems` later will have authentication-related information in their `Headers`.
 7. Run the request in `Create users in REMS`, in order, from top to bottom.
-    - `"userid": {{rems-applicant-user-id}}` is calling a variable from the environment. This demo also uses lots of local collection-level variables, which allow `tests` to pass information to subsequent `requests`.
+    - `"userid": {{rems_applicant_user_id}}` is calling a variable from the environment. This demo also uses lots of local collection-level variables, which allow `tests` to pass information to subsequent `requests`.
+    - The `Authorization` tab is used for storing the REMS API key. Many requests in this collection inherit authorization from their parent folder.
 8. Expand the remaining folders and read the titles of the requests to skim the story of the demo.
 
 ## Running the demo
@@ -122,8 +111,13 @@ In case of error, here's an example you can examine instead. Copy the long strin
 
 If you modify the networking of the docker containers, consider the following:
 
-There is a `frontendUrl` hardcoded in `rp-keycloak.realm-export.json`. This should correspond to the value of `OIDC_METADATA_URL` in the environment of the REMS container. Having this value be hardcoded is not ideal, but it is a workaround for some issues introduced by the combination of the following:
+There is a `frontendUrl` hardcoded in `rp-keycloak.realm-export.json`. Having this value be hardcoded is not ideal, but it is a workaround for some issues introduced by the combination of the following:
     - The way that REMS handles networking with the IdP
     - The docker-compose bridge network's use of internal ports.
 
-The value of `frontendUrl` can be modified in the realm-export.json file, or through the keycloak administrative console in the browser.
+The value of `frontendUrl` can be modified in the realm-export.json file **prior to** running `./init/rp-keycloak.sh`, or through the keycloak administrative console in the browser.
+
+If you are encountering issues with REMS authentication, try the following:
+- Use the brower's `Network` inspector to see how login is being routed
+- Modify rp-keycloak's `frontendUrl`
+- Modify the REMS environment variable `OIDC_METADATA_URL`

@@ -83,7 +83,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"title\": \"{{resource-title}}\",\n    \"data_use\": {\n        \"consent_code\": {\n            \"primary_category\": {\n                \"code\": \"GRU\"\n            },\n            \"secondary_categories\": [\n                {\n                    \"code\": \"GSO\"\n                }\n            ]\n        },\n        \"data_use_requirements\": [\n            {\n                \"code\": \"COL\"\n            },\n            {\n                \"code\": \"PUB\"\n            }\n        ]\n    },\n    \"project\": \"{{project_id}}\"\n}",
+									"raw": "{\n    \"title\": \"{{resource_title}}\",\n    \"data_use\": {\n        \"consent_code\": {\n            \"primary_category\": {\n                \"code\": \"GRU\"\n            },\n            \"secondary_categories\": [\n                {\n                    \"code\": \"GSO\"\n                }\n            ]\n        },\n        \"data_use_requirements\": [\n            {\n                \"code\": \"COL\"\n            },\n            {\n                \"code\": \"PUB\"\n            }\n        ]\n    },\n    \"project\": \"{{project_id}}\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -487,6 +487,29 @@
 							},
 							"response": []
 						}
+					],
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
 					]
 				},
 				{
@@ -582,6 +605,29 @@
 							},
 							"response": []
 						}
+					],
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
 					]
 				}
 			],
@@ -633,32 +679,17 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
-								"value": "{{rems-owner-user-id}}",
+								"value": "{{rems_owner_user_id}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"userid\": \"{{rems-applicant-user-id}}\",\n  \"name\": \"applying user\",\n  \"email\": \"applicant email\"\n}",
+							"raw": "{\n  \"userid\": \"{{rems_applicant_user_id}}\",\n  \"name\": \"applying user\",\n  \"email\": \"applicant email\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -678,6 +709,41 @@
 						"description": "In order to create a user in REMS, you must provide the user ID of a user with the owner role in the x-rems-user-id header.\nTherefore, at least one user must actually log in to REMS via the UI and then have the owner role assigned to them. After this is done, all other users may be created by POSTing to this endpoint."
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "key",
+						"value": "x-rems-api-key",
+						"type": "string"
+					},
+					{
+						"key": "value",
+						"value": "{{rems_api_key}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -708,32 +774,17 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"archived\": true,\n  \"organization/id\": \"test-org\",\n  \"organization/short-name\": {\n    \"en\": \"A test organization\"\n  },\n  \"enabled\": true,\n  \"organization/owners\": [\n    {\n      \"userid\": \"{{rems-owner-user-id}}\"\n    }\n  ],\n  \"organization/name\": {\n    \"en\": \"This is a test organization\"\n  }\n}",
+							"raw": "{\n  \"archived\": true,\n  \"organization/id\": \"test-org\",\n  \"organization/short-name\": {\n    \"en\": \"A test organization\"\n  },\n  \"enabled\": true,\n  \"organization/owners\": [\n    {\n      \"userid\": \"{{rems_owner_user_id}}\"\n    }\n  ],\n  \"organization/name\": {\n    \"en\": \"This is a test organization\"\n  }\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -780,27 +831,12 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"body": {
@@ -852,27 +888,12 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"body": {
@@ -924,32 +945,17 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
-								"value": "{{rems-owner-user-id}}",
+								"value": "{{rems_owner_user_id}}",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"resid\": \"{{resource-title}}\",\n  \"organization\": {\n    \"organization/id\": \"string\"\n  },\n  \"licenses\": [\n    {{license_id}}\n  ]\n}",
+							"raw": "{\n  \"resid\": \"{{resource_title}}\",\n  \"organization\": {\n    \"organization/id\": \"string\"\n  },\n  \"licenses\": [\n    {{license_id}}\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -996,32 +1002,17 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"organization\": {\n    \"organization/id\": \"string\"\n  },\n  \"title\": \"string\",\n  \"type\": \"workflow/default\",\n  \"handlers\": [\n    \"{{rems-owner-user-id}}\"\n  ]\n}",
+							"raw": "{\n  \"organization\": {\n    \"organization/id\": \"string\"\n  },\n  \"title\": \"string\",\n  \"type\": \"workflow/default\",\n  \"handlers\": [\n    \"{{rems_owner_user_id}}\"\n  ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1068,26 +1059,11 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
-								"value": "{{rems-owner-user-id}}",
+								"value": "{{rems_owner_user_id}}",
 								"type": "text"
 							}
 						],
@@ -1112,6 +1088,41 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{rems_api_key}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "x-rems-api-key",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -1145,27 +1156,12 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-applicant-user-id}}"
+								"value": "{{rems_applicant_user_id}}"
 							}
 						],
 						"body": {
@@ -1210,27 +1206,12 @@
 						"disableBodyPruning": true
 					},
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"body": {
@@ -1281,27 +1262,12 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-applicant-user-id}}"
+								"value": "{{rems_applicant_user_id}}"
 							}
 						],
 						"body": {
@@ -1350,27 +1316,12 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-applicant-user-id}}"
+								"value": "{{rems_applicant_user_id}}"
 							}
 						],
 						"body": {
@@ -1394,6 +1345,41 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{rems_api_key}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "x-rems-api-key",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -1424,27 +1410,12 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"body": {
@@ -1470,6 +1441,21 @@
 					"response": []
 				}
 			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{rems_api_key}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "x-rems-api-key",
+						"type": "string"
+					}
+				]
+			},
 			"event": [
 				{
 					"listen": "prerequest",
@@ -1526,7 +1512,7 @@
 							"apikey": [
 								{
 									"key": "value",
-									"value": "{{rems-api-key}}",
+									"value": "{{rems_api_key}}",
 									"type": "string"
 								},
 								{
@@ -1541,17 +1527,17 @@
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"url": {
-							"raw": "{{rems_url}}{{rems_base_path}}/permissions/{{rems-applicant-user-id}}",
+							"raw": "{{rems_url}}{{rems_base_path}}/permissions/{{rems_applicant_user_id}}",
 							"host": [
 								"{{rems_url}}{{rems_base_path}}"
 							],
 							"path": [
 								"permissions",
-								"{{rems-applicant-user-id}}"
+								"{{rems_applicant_user_id}}"
 							]
 						}
 					},
@@ -1588,6 +1574,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -1597,9 +1586,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{rems_url}}{{rems_base_path}}/individuals",
+							"raw": "{{katsu_url}}{{katsu_base_path}}/individuals",
 							"host": [
-								"{{rems_url}}{{rems_base_path}}"
+								"{{katsu_url}}{{katsu_base_path}}"
 							],
 							"path": [
 								"individuals"
@@ -1743,6 +1732,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -1752,9 +1744,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{rems_url}}{{rems_base_path}}/phenopackets",
+							"raw": "{{katsu_url}}{{katsu_base_path}}/phenopackets",
 							"host": [
-								"{{rems_url}}{{rems_base_path}}"
+								"{{katsu_url}}{{katsu_base_path}}"
 							],
 							"path": [
 								"phenopackets"
@@ -1916,27 +1908,12 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "{{rems-api-key}}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "x-rems-api-key",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"body": {
@@ -1963,6 +1940,21 @@
 					"response": []
 				}
 			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "{{rems_api_key}}",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "x-rems-api-key",
+						"type": "string"
+					}
+				]
+			},
 			"event": [
 				{
 					"listen": "prerequest",
@@ -2019,7 +2011,7 @@
 							"apikey": [
 								{
 									"key": "value",
-									"value": "{{rems-api-key}}",
+									"value": "{{rems_api_key}}",
 									"type": "string"
 								},
 								{
@@ -2034,17 +2026,17 @@
 							{
 								"key": "x-rems-user-id",
 								"type": "text",
-								"value": "{{rems-owner-user-id}}"
+								"value": "{{rems_owner_user_id}}"
 							}
 						],
 						"url": {
-							"raw": "{{rems_url}}{{rems_base_path}}/permissions/{{rems-applicant-user-id}}",
+							"raw": "{{rems_url}}{{rems_base_path}}/permissions/{{rems_applicant_user_id}}",
 							"host": [
 								"{{rems_url}}{{rems_base_path}}"
 							],
 							"path": [
 								"permissions",
-								"{{rems-applicant-user-id}}"
+								"{{rems_applicant_user_id}}"
 							]
 						}
 					},
@@ -2074,6 +2066,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2083,9 +2078,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{rems_url}}{{rems_base_path}}/individuals",
+							"raw": "{{katsu_url}}{{katsu_base_path}}/individuals",
 							"host": [
-								"{{rems_url}}{{rems_base_path}}"
+								"{{katsu_url}}{{katsu_base_path}}"
 							],
 							"path": [
 								"individuals"
@@ -2222,6 +2217,9 @@
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "GET",
 						"header": [
 							{
@@ -2231,9 +2229,9 @@
 							}
 						],
 						"url": {
-							"raw": "{{rems_url}}{{rems_base_path}}/phenopackets",
+							"raw": "{{katsu_url}}{{katsu_base_path}}/phenopackets",
 							"host": [
-								"{{rems_url}}{{rems_base_path}}"
+								"{{katsu_url}}{{katsu_base_path}}"
 							],
 							"path": [
 								"phenopackets"
